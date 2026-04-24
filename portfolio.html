@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omkar Sangrulkar — Embedded Firmware Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0d1b2a;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-light: #eff6ff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --surface: #f8fafc;
+  --white: #ffffff;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--text); background: var(--white); font-size: 15px; line-height: 1.6; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 62px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 7%;
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12.5px; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--accent); }
+.hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; }
+.hero-photo {
+  width: 100px; height: 100px; border-radius: 50%; flex-shrink: 0;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  overflow: hidden; margin-top: 4px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+.hero-photo-placeholder {
+  width: 100%; height: 100%; background: var(--accent-light);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--accent);
+}
+.nav-cv { font-family: var(--mono); font-size: 11px; padding: 6px 13px; background: var(--accent); color: white; border-radius: 5px; text-decoration: none; transition: background 0.2s; margin-left: 8px; }
+.nav-cv:hover { background: var(--accent-dark); }
+
+/* HERO */
+#hero { min-height: 100vh; padding: 0 7%; display: flex; align-items: center; max-width: 1080px; margin: 0 auto; }
+.hero-inner { padding-top: 62px; width: 100%; }
+.hero-eyebrow { font-family: var(--mono); font-size: 11.5px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; }
+h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.03em; color: var(--navy); }
+.hero-dim { color: var(--muted); font-weight: 300; }
+.hero-sub { font-size: 1.05rem; color: var(--muted); font-weight: 300; max-width: 480px; line-height: 1.8; margin: 22px 0 36px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
+.btn-solid { background: var(--accent); color: white; border-color: var(--accent); }
+.btn-solid:hover { background: var(--accent-dark); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.hero-chips { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 48px; }
+.chip { font-family: var(--mono); font-size: 10.5px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); padding: 4px 10px; border-radius: 20px; }
+.hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 4px; }
+.hero-photo { width: 96px; height: 96px; border-radius: 50%; flex-shrink: 0; border: 3px solid var(--border); overflow: hidden; margin-top: 12px; }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-photo-placeholder { width: 100%; height: 100%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--accent); }
+
+/* SHARED */
+.section { padding: 88px 7%; max-width: 1080px; margin: 0 auto; }
+.alt-bg { background: var(--surface); }
+.sec-tag { font-family: var(--mono); font-size: 10.5px; font-weight: 500; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.sec-title { font-size: 1.7rem; font-weight: 600; color: var(--navy); letter-spacing: -0.025em; margin-bottom: 40px; }
+hr.divider { border: none; border-top: 1px solid var(--border); margin: 0 7%; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 56px; align-items: start; }
+.about-text p { color: var(--muted); line-height: 1.85; margin-bottom: 14px; font-size: 15px; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stat { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 18px 16px; }
+.stat-n { font-size: 1.9rem; font-weight: 600; color: var(--accent); line-height: 1; }
+.stat-l { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+
+/* PROJECTS */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.filter-btn { font-family: var(--mono); font-size: 11px; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; transition: all 0.2s; font-weight: 500; letter-spacing: 0.04em; }
+.filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 20px; }
+.proj-card { border: 1px solid var(--border); border-radius: 10px; padding: 26px 22px; background: var(--white); display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+.proj-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+.proj-card:hover { border-color: #93c5fd; transform: translateY(-3px); }
+.proj-card:hover::after { transform: scaleX(1); }
+.proj-badge { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 500; background: var(--accent-light); color: var(--accent); padding: 3px 9px; border-radius: 3px; margin-bottom: 14px; letter-spacing: 0.04em; }
+.proj-name { font-size: 0.975rem; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+.proj-desc { font-size: 13.5px; color: var(--muted); line-height: 1.75; flex: 1; }
+.proj-footer { margin-top: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.proj-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.ptag { font-family: var(--mono); font-size: 9.5px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); padding: 2px 7px; border-radius: 3px; }
+.proj-link { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap; }
+.proj-link:hover { text-decoration: underline; }
+.proj-card.hidden { display: none; }
+
+/* EXPERIENCE */
+.exp-list { border-top: 1px solid var(--border); }
+.exp-row { display: grid; grid-template-columns: 190px 1fr; gap: 0 36px; padding: 28px 0; border-bottom: 1px solid var(--border); }
+.exp-period { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.03em; line-height: 1.6; }
+.exp-org { font-size: 12.5px; color: var(--accent); font-weight: 500; margin-top: 5px; }
+.exp-role { font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 9px; }
+.exp-body { font-size: 13.5px; color: var(--muted); line-height: 1.8; }
+.exp-body ul { padding-left: 16px; }
+.exp-body li { margin-bottom: 5px; }
+
+/* SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 24px; }
+.sk-title { font-family: var(--mono); font-size: 10.5px; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+.sk-list { list-style: none; }
+.sk-list li { font-size: 13.5px; color: var(--muted); padding: 5px 0; display: flex; align-items: center; gap: 8px; }
+.sk-list li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* CONTACT */
+.contact-wrap { background: var(--navy); }
+.contact-inner { padding: 88px 7%; max-width: 1080px; margin: 0 auto; text-align: center; }
+.ct-tag { font-family: var(--mono); font-size: 10.5px; font-weight: 500; color: #60a5fa; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
+.ct-title { font-size: 1.7rem; font-weight: 600; color: white; margin-bottom: 14px; letter-spacing: -0.025em; }
+.ct-sub { color: #94a3b8; max-width: 400px; margin: 0 auto 38px; line-height: 1.75; font-weight: 300; }
+.ct-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.ct-btn { display: inline-flex; align-items: center; gap: 7px; padding: 11px 22px; border-radius: 6px; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+.ct-primary { background: var(--accent); color: white; }
+.ct-primary:hover { background: var(--accent-dark); }
+.ct-outline { background: transparent; color: #94a3b8; border: 1px solid #334155; }
+.ct-outline:hover { color: white; border-color: #64748b; }
+
+footer { background: var(--navy); border-top: 1px solid #1e3a5f; padding: 22px 7%; display: flex; justify-content: space-between; align-items: center; }
+footer p { font-family: var(--mono); font-size: 11px; color: #475569; }
+
+@media (max-width: 700px) {
+  nav { padding: 0 5%; }
+  .nav-links { display: none; }
+  #hero { padding: 0 5%; }
+  .section { padding: 64px 5%; }
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .exp-row { grid-template-columns: 1fr; gap: 4px; }
+  .contact-inner { padding: 64px 5%; }
+  footer { padding: 20px 5%; flex-direction: column; gap: 6px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">omkar.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about-s">About</a></li>
+    <li><a href="#projects-s">Projects</a></li>
+    <li><a href="#experience-s">Experience</a></li>
+    <li><a href="#contact-s">Contact</a></li>
+  </ul>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="mailto:omkarsangrulkar14@gmail.com" class="nav-cta">Get in touch</a>
+    <a href="resume.pdf" download class="nav-cv">Download CV</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div>
+        <p class="hero-eyebrow">Embedded Firmware Engineer</p>
+        <h1>Omkar<br><span class="hero-dim">Sangrulkar</span></h1>
+      </div>
+      <div class="hero-photo">
+        <!-- Replace src with your actual photo path e.g. src="photo.jpg" -->
+        <div class="hero-photo-placeholder">OS</div>
+      </div>
+    </div>
+    <p class="hero-sub">MS ECE at CU Boulder · Microelectronics & low-power embedded systems · 2+ years industry firmware experience at Forbes Marshall.</p>
+    <div class="hero-actions">
+      <a href="#projects-s" class="btn btn-solid">View Projects</a>
+      <a href="#experience-s" class="btn btn-ghost">Experience</a>
+      <a href="resume.pdf" download class="btn btn-ghost">Download CV</a>
+      <a href="mailto:omkarsangrulkar14@gmail.com" class="btn btn-ghost">Email Me</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">STM32</span>
+      <span class="chip">EFR32</span>
+      <span class="chip">BLE / BLE Mesh</span>
+      <span class="chip">LoRa</span>
+      <span class="chip">FreeRTOS</span>
+      <span class="chip">Yocto Linux</span>
+      <span class="chip">CAN / SPI / I2C</span>
+      <span class="chip">3× IEEE Author</span>
+      <span class="chip">HackMIT 2023 — 2nd Place</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<div id="about-s" class="alt-bg">
+  <div class="section">
+    <p class="sec-tag">About</p>
+    <h2 class="sec-title">Building firmware that works<br>when it absolutely has to</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm an MS ECE student at the University of Colorado Boulder, specializing in microelectronics and low-power embedded design. My work sits at the boundary of hardware and software — writing production firmware for constrained devices in demanding environments.</p>
+        <p>Before grad school I spent two years at Forbes Marshall developing STM32-based industrial IoT firmware — BLE/LoRa wireless drivers, OTA update pipelines, and FFT-based vibration signal processing for predictive maintenance. I hold three IEEE publications and a granted Indian patent.</p>
+        <p>I build things to learn: a DIY mixed-signal oscilloscope from scratch on STM32F411, a Yocto-based AI rover on Raspberry Pi 5, and a distributed BLE Mesh fire & hazard detection system on EFR32. Currently open to embedded firmware internship and full-time opportunities.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-n">2+</div><div class="stat-l">Years industry firmware experience</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">IEEE publications</div></div>
+        <div class="stat"><div class="stat-n">1</div><div class="stat-l">Granted Indian patent</div></div>
+        <div class="stat"><div class="stat-n">2nd</div><div class="stat-l">Place, HackMIT 2023</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<div id="projects-s">
+  <div class="section">
+    <p class="sec-tag">Projects</p>
+    <h2 class="sec-title">Things I've built</h2>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="embedded">Embedded C</button>
+      <button class="filter-btn" data-filter="wireless">Wireless</button>
+      <button class="filter-btn" data-filter="linux">Linux</button>
+      <button class="filter-btn" data-filter="analog">Analog / HW</button>
+    </div>
+    <div class="projects-grid" id="proj-grid">
+
+      <div class="proj-card" data-tags="linux embedded wireless">
+        <span class="proj-badge">Yocto · AI · Linux</span>
+        <h3 class="proj-name">Raspberry Pi 5 AI Rover</h3>
+        <p class="proj-desc">Custom Yocto Linux image (Styhead 5.2) for an autonomous rover with a TinyLlama Q4_K_M AI brain via llama.cpp, libcamera/PiSP MJPEG streaming pipeline, and a web UI for manual control. CAN bus communication over MCP2515 for actuator control. All services — C++ camera server, Python AI bridge, C++ UI server — managed as systemd units.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">Yocto</span><span class="ptag">RPi 5</span><span class="ptag">llama.cpp</span><span class="ptag">libcamera</span><span class="ptag">CAN/MCP2515</span><span class="ptag">ESP32</span></div>
+          <a href="https://github.com/cu-ecen-aeld/final-project-omkarsangrulkar" class="proj-link" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="embedded wireless">
+        <span class="proj-badge">EFR32 · BLE Mesh · Low-Power</span>
+        <h3 class="proj-name">Distributed Fire & Hazard Detection</h3>
+        <p class="proj-desc">4-node distributed monitoring system on EFR32BG13 using Silicon Labs GSDK 4.3.2 and a custom BLE Mesh vendor model. Coordinator node aggregates temperature and gas sensor data; dedicated alarm node drives LCD alerts. LPN deep sleep (EM2) achieves sub-mA average current for battery-operated sensor nodes in field deployment.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">EFR32BG13</span><span class="ptag">BLE Mesh</span><span class="ptag">EM2 Sleep</span><span class="ptag">GSDK 4.3.2</span><span class="ptag">Vendor Model</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="embedded wireless">
+        <span class="proj-badge">STM32 · GSM · OTA</span>
+        <h3 class="proj-name">Firmware OTA Update over GSM (FOTA_GSM)</h3>
+        <p class="proj-desc">Firmware over-the-air update system for STM32 using the Quectel M66 GSM module. Implements a bootloader that fetches new firmware over a cellular connection and flashes it in-field — enabling remote updates on deployed industrial IoT devices without physical access.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">STM32</span><span class="ptag">Quectel M66</span><span class="ptag">GSM</span><span class="ptag">Bootloader</span><span class="ptag">OTA</span></div>
+          <a href="https://github.com/omkarsangrulkar/FOTA_GSM" class="proj-link" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="embedded analog">
+        <span class="proj-badge">STM32 · Analog · DSP</span>
+        <h3 class="proj-name">DIY Mixed-Signal Oscilloscope</h3>
+        <p class="proj-desc">Full oscilloscope built from scratch on STM32F411 — ILI9488 TFT display, XPT2046 touch, custom analog front-end for ±5V/±15V ranges, ADC/DMA continuous sampling, software trigger system, and I2C/UART protocol decoders. All signal processing and rendering in embedded C.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">STM32F411</span><span class="ptag">ADC/DMA</span><span class="ptag">Analog Front-End</span><span class="ptag">ILI9488</span></div>
+          <a href="https://github.com/omkarsangrulkar/Mixed-Signal-Oscilloscope" class="proj-link" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="linux embedded">
+        <span class="proj-badge">Linux Kernel · Buildroot · QEMU</span>
+        <h3 class="proj-name">Linux Character Device Driver</h3>
+        <p class="proj-desc">Kernel module (aesdchar) with circular buffer, mutex locking, llseek, and AESDCHAR_IOCSEEKTO ioctl for seekable append-only log semantics. Extended aesdsocket to handle ioctl at the socket layer. Built and tested on Buildroot/QEMU ARM64 cross-compiled environment.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">Linux Kernel</span><span class="ptag">ioctl</span><span class="ptag">Buildroot</span><span class="ptag">QEMU ARM64</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="embedded analog">
+        <span class="proj-badge">STM32 · I2C · Sensors</span>
+        <h3 class="proj-name">VCNL4040 Proximity & ALS Driver</h3>
+        <p class="proj-desc">Two-file HAL-based I2C driver for the VCNL4040 proximity and ambient light sensor on STM32G431KB. Debugged repeated-start conditions in the state machine and integrated dual ADC channel reads for multi-sensor fusion.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">STM32G431KB</span><span class="ptag">I2C HAL</span><span class="ptag">VCNL4040</span><span class="ptag">ADC</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card" data-tags="embedded analog">
+        <span class="proj-badge">STM32 · IMU · DSP</span>
+        <h3 class="proj-name">Digital Angle Gauge</h3>
+        <p class="proj-desc">STM32F091RC inclinometer using MPU6050 IMU with a complementary filter for stable angle estimation. UART CLI for real-time readout and calibration. Interrupt-driven I2C state machine with clean embedded C architecture.</p>
+        <div class="proj-footer">
+          <div class="proj-tags"><span class="ptag">STM32F091RC</span><span class="ptag">MPU6050</span><span class="ptag">Comp. Filter</span><span class="ptag">UART CLI</span></div>
+          <a href="https://github.com/omkarsangrulkar/Digital-Angle-Gauge" class="proj-link" target="_blank">GitHub →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<div id="experience-s" class="alt-bg">
+  <div class="section">
+    <p class="sec-tag">Experience</p>
+    <h2 class="sec-title">Where I've worked</h2>
+    <div class="exp-list">
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">2025 – Present</div>
+          <div class="exp-org">CU Boulder</div>
+        </div>
+        <div>
+          <div class="exp-role">MS Electrical & Computer Engineering</div>
+          <div class="exp-body">Focus in microelectronics and low-power embedded design. Key courses: Advanced Embedded Software Design (AESD), BLE Mesh Systems (ECEN 5823), Mixed-Signal Circuit Design (ECEN 5613). Accepted into the 2026–2027 CEAS Course Facilitator Cohort supporting the MS-ECE program on Coursera.</div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">Jun 2021 – Jul 2023</div>
+          <div class="exp-org">Forbes Marshall</div>
+        </div>
+        <div>
+          <div class="exp-role">Firmware Engineer</div>
+          <div class="exp-body">
+            <ul>
+              <li>Developed production STM32 Industrial IoT firmware deployed across manufacturing plants.</li>
+              <li>Implemented BLE and LoRa wireless drivers for sensor telemetry and mesh networking.</li>
+              <li>Built an OTA firmware update pipeline, significantly reducing field upgrade turnaround time.</li>
+              <li>Wrote FFT-based vibration signal processing for predictive maintenance diagnostics.</li>
+              <li>Optimized EFR32 energy modes for sub-mA battery life in always-on sensor nodes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">2017 – 2021</div>
+          <div class="exp-org">MIT WPU, Pune</div>
+        </div>
+        <div>
+          <div class="exp-role">BE Electronics & Communication Engineering</div>
+          <div class="exp-body">GPA 3.90/4.0. Member of <strong>Piranha Racing</strong> — official M BAJA SAE team of MIT WPU, Electronics sub-team. Responsible for vehicle electronics, sensor integration, and embedded systems for the off-road SAE competition vehicle.</div>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div>
+          <div class="exp-period">2023</div>
+          <div class="exp-org">HackMIT</div>
+        </div>
+        <div>
+          <div class="exp-role">2nd Place — HackMIT 2023</div>
+          <div class="exp-body">Competed at MIT's flagship hackathon and placed 2nd overall, building a hardware-software integrated project under 24-hour constraints.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<div>
+  <div class="section">
+    <p class="sec-tag">Skills</p>
+    <h2 class="sec-title">Technical toolkit</h2>
+    <div class="skills-grid">
+      <div>
+        <div class="sk-title">Microcontrollers</div>
+        <ul class="sk-list">
+          <li>STM32 (F1, F4, G4 series)</li>
+          <li>EFR32BG13 (Silicon Labs)</li>
+          <li>Raspberry Pi 5</li>
+          <li>ESP32</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sk-title">Wireless Protocols</div>
+        <ul class="sk-list">
+          <li>BLE / BLE Mesh (GSDK)</li>
+          <li>LoRa / LoRaWAN</li>
+          <li>CAN bus (MCP2515)</li>
+          <li>SPI, I2C, UART, USB</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sk-title">OS & Build Systems</div>
+        <ul class="sk-list">
+          <li>Yocto Linux (Styhead 5.2)</li>
+          <li>Buildroot / QEMU</li>
+          <li>FreeRTOS / Bare-metal</li>
+          <li>Linux kernel modules</li>
+          <li>systemd</li>
+        </ul>
+      </div>
+      <div>
+        <div class="sk-title">Languages & Tools</div>
+        <ul class="sk-list">
+          <li>Embedded C / C++</li>
+          <li>Python</li>
+          <li>GDB, OpenOCD</li>
+          <li>STM32CubeIDE, Simplicity Studio</li>
+          <li>Git, CMake</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact-s" class="contact-wrap">
+  <div class="contact-inner">
+    <p class="ct-tag">Contact</p>
+    <h2 class="ct-title">Let's connect</h2>
+    <p class="ct-sub">Open to embedded firmware internship and full-time roles. Always happy to talk hardware, firmware, or interesting projects.</p>
+    <div class="ct-links">
+      <a href="mailto:omkarsangrulkar14@gmail.com" class="ct-btn ct-primary">omkarsangrulkar14@gmail.com</a>
+      <a href="https://www.linkedin.com/in/omkar-sangrulkar-11a7981b3/" target="_blank" class="ct-btn ct-outline">LinkedIn</a>
+      <a href="https://github.com/omkarsangrulkar" target="_blank" class="ct-btn ct-outline">GitHub</a>
+      <a href="resume.pdf" download class="ct-btn ct-outline">Download CV</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Omkar Sangrulkar · Boulder, CO</p>
+  <p>omkarsangrulkar14@gmail.com</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.proj-card').forEach(card => {
+        const t = card.dataset.tags || '';
+        card.classList.toggle('hidden', f !== 'all' && !t.includes(f));
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
